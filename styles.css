@@ -1,0 +1,252 @@
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 1rem;
+}
+
+body {
+  height: 100vh;
+  font-family: 'Inter', sans-serif;
+}
+
+
+
+main {
+  height: 75%;
+  width: 100%;
+  position: relative;
+  padding: 2em 0 0;
+}
+
+
+
+/* TYPOGRAPHY */
+
+h1 {
+  color: white;
+  margin: 0;
+  font-size: 2.25rem;
+  font-weight: 800;
+}
+
+.start-exploring-title{
+  color: #dfdddd;
+  margin: 0;
+}
+
+.no-records p {
+  color: #dfdddd;
+  font-size: 1.125rem;
+}
+
+.movie-type-and-time p,
+.movie-type-and-time a{
+  font-size: .75rem;
+}
+
+/* HEADER */
+
+header {
+  height: 25%;
+  width: 100%;
+  background-image: url("https://images.unsplash.com/photo-1628432136678-43ff9be34064?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=663&q=80");
+  background-position: center -150px;
+  background-size: cover;
+  position: relative;
+  color: white;
+  z-index: 0;
+}
+
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.722);
+  z-index: -1;
+
+}
+
+.title-wrapper {
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.watchlist-page-link {
+  text-decoration: none;
+  color: white;
+  cursor: pointer;
+  transform: scale(1);
+  transition: transform 250ms;
+  display: inline-block;
+}
+
+.watchlist-page-link:hover,
+.watchlist-page-link:focus {
+  transform: scale(1.1);
+}
+
+/* LAYOUT */
+
+.container {
+  margin: auto;
+  max-width: 450px;
+}
+
+.listed-films-wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+
+/* SEARCHBAR */
+
+.searchbar-wrapper{
+  position: absolute;
+  width: 100%;
+  margin-top: -50px;
+}
+
+.search-bar {
+  border-radius: 4px 0px 0px 4px;
+  border: 1px solid #D1D5DB;
+  width: 70%;
+  height: 40px;
+  padding-left: 3em;
+}
+
+.search-btn {
+  border-radius: 0px 4px 4px 0px;
+  border: 1px solid #D1D5DB;
+  width: 30%;
+  height: 40px;
+  cursor: pointer;
+
+}
+
+.fa-magnifying-glass{
+  position: absolute;
+  left: .75em;
+  top: .75em;
+}
+
+
+/* WHEN NO FILMS  */
+
+.start-exploring-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+} 
+
+.no-records {
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 80%;
+  height: 100%;
+}
+
+/* MOVIE */
+
+.movie {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding-top: 1.5em;
+  padding-bottom: 1em;
+  border-bottom: 1px solid #D1D5DB;
+}
+
+.movie:last-child{
+  padding-bottom: 3em;
+}
+
+.movie-poster-wrapper {
+  width: 27%;
+}
+
+.movie-poster {
+  width: 100%;
+}
+
+.movie-info-wrapper {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.movie-name-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.movie-imdb { 
+  margin: 0;
+  font-size: .75rem;
+  width: max-content;
+}
+
+.fa-star {
+  margin-right: .3em;
+}
+
+.movie-name {
+  margin: 0;
+  margin-right: .4em;
+  font-size: 1.125rem ;
+  font-weight: 500;
+  max-width: 85%;
+
+}
+
+.movie-type-and-time{
+  display: flex;
+  gap: 1em;
+}
+
+
+
+.movie-type-and-time a{
+  align-self: center;
+}
+
+.add-watchlist{
+  transform: scale(1);
+  transition: transform 250ms;
+  display: inline-block;
+}
+
+.add-watchlist:hover,
+.add-watchlist:focus{
+  cursor: pointer;
+  transform: scale(1.2);
+}
+
+.fa-circle-plus {
+  margin-right: .3em;
+}
+
+.movie-bio {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #6B7280;
+  margin: 0;
+}
