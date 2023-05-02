@@ -27,6 +27,8 @@ function getMovie(movieName){
 DATADAN DONENLERI ARRAY ICINDE TUTUP IMDBIDSINI SORGULATP LOCAL STORAGE A JSON OLARK ATABILIRSIN
 
 */
+
+const movies = []
 function placeHtml(filmArray) {
 
   let htmlString = ``
@@ -34,6 +36,7 @@ function placeHtml(filmArray) {
     fetch(`http://www.omdbapi.com/?apikey=5a98f506&t=${movie.Title}&plot=short`)
       .then(res => res.json())
       .then(data => {
+        movies.push(data)
         htmlString += `
         <div class="movie">
           <div class="movie-poster-wrapper">
@@ -60,7 +63,7 @@ function placeHtml(filmArray) {
         movieBox.innerHTML = htmlString
       })
   }
-
+  console.log(movies);
 
 }
 
@@ -76,6 +79,10 @@ document.addEventListener("click", (e) => {
 })
 
 
-function addToMyList(item){
-  console.log(item)
+function addToMyList(imdbId){
+  for(let movie of movies){
+    if(movie.imdbID == imdbId){
+      console.log(movie)
+    }
+  }
 }
