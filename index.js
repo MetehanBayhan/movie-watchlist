@@ -1,8 +1,11 @@
 
 const searchBtn = document.querySelector(".search-btn")
-const searchBar = document.querySelector(".search-bar")
+const watchlistSearchBtn = document.querySelector(".watchlist-search-btn")
+const searchBar = document.querySelector(".film-search-bar")
+const watchlistSearchBar = document.querySelector(".watchlist-search-bar")
 const movieBox = document.querySelector(".listed-films-wrapper")
-
+const myWatchlistBox = document.querySelector(".my-watchlist-wrapper")
+const pageDirection = document.querySelector(".watchlist-page-link")
 
 function getMovie(movieName){
     fetch(`http://www.omdbapi.com/?apikey=5a98f506&s=${movieName}&type=movie&plot=short`)
@@ -67,10 +70,11 @@ function placeHtml(filmArray) {
 
 }
 
-
-searchBtn.addEventListener("click", () => {
-  getMovie(searchBar.value)
-})
+if (location.pathname === "/index.html"){
+  searchBtn.addEventListener("click", () => {
+    getMovie(searchBar.value)
+  })
+}
 
 document.addEventListener("click", (e) => {
   if(e.target.dataset.imdbid){
@@ -82,7 +86,49 @@ document.addEventListener("click", (e) => {
 function addToMyList(imdbId){
   for(let movie of movies){
     if(movie.imdbID == imdbId){
-      console.log(movie)
+      localStorage.setItem("data", JSON.stringify(movie))
     }
   }
 }
+
+pageDirection.addEventListener("click", () => {
+  localStorage.setItem("renderResult",renderMyList())
+})
+
+function renderMyList() {
+  const getFromLocal = JSON.parse(localStorage.getItem("data"))
+  return `
+  <div class="movie">
+    <div class="movie-poster-wrapper">
+      <img src="${getFromLocal.Poster}" alt="" class="movie-poster">
+    </div>
+    
+    <div class="movie-info-wrapper">
+      <div class="movie-name-wrapper">
+        <h4 class="movie-name">${getFromLocal.Title}</h4>
+        <p class="movie-imdb"><i class="fa-solid fa-star fa-md" style="color: #fec654;"></i>${getFromLocal.imdbRating}</p>
+      </div>
+      <div class="movie-type-and-time">
+        <p class="movie-time">${getFromLocal.Runtime}</p>
+        <p class="movie-type">${getFromLocal.Genre}</p>
+        <a class="add-watchlist" data-imdbid="${getFromLocal.imdbID}"><i class="fa-solid fa-circle-plus fa-lg" style="color: #000000;"></i>Watchlist</a>
+      </div>
+      <div class="movie-bio-wrapper">
+        <p class="movie-bio">${getFromLocal.Plot}</p>
+      </div>
+    </div>
+  </div>`
+}
+
+
+window.onload = function() {
+  if (location.pathname === "/watchlist.html"){
+    const renderResult = localStorage.getItem("renderResult");
+    if (renderResult) {
+      myWatchlistBox.innerHTML = renderResult;
+      localStorage.removeItem(renderResult)
+    }
+  }
+  
+  
+};
