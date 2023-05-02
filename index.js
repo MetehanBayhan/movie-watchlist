@@ -66,7 +66,6 @@ function placeHtml(filmArray) {
         movieBox.innerHTML = htmlString
       })
   }
-  console.log(movies);
 
 }
 
@@ -82,43 +81,51 @@ document.addEventListener("click", (e) => {
   }
 })
 
+let currentWatchlist = []
 
 function addToMyList(imdbId){
   for(let movie of movies){
     if(movie.imdbID == imdbId){
-      localStorage.setItem("data", JSON.stringify(movie))
+      currentWatchlist.push(movie)
+      localStorage.setItem("data", JSON.stringify(currentWatchlist))
     }
   }
 }
+
 
 pageDirection.addEventListener("click", () => {
   localStorage.setItem("renderResult",renderMyList())
 })
 
 function renderMyList() {
-  const getFromLocal = JSON.parse(localStorage.getItem("data"))
-  return `
-  <div class="movie">
-    <div class="movie-poster-wrapper">
-      <img src="${getFromLocal.Poster}" alt="" class="movie-poster">
-    </div>
-    
-    <div class="movie-info-wrapper">
-      <div class="movie-name-wrapper">
-        <h4 class="movie-name">${getFromLocal.Title}</h4>
-        <p class="movie-imdb"><i class="fa-solid fa-star fa-md" style="color: #fec654;"></i>${getFromLocal.imdbRating}</p>
+  currentWatchlist = JSON.parse(localStorage.getItem("data"))
+  let htmlString = ``
+  for(let movie of currentWatchlist){
+    htmlString += `
+    <div class="movie">
+      <div class="movie-poster-wrapper">
+        <img src="${movie.Poster}" alt="" class="movie-poster">
       </div>
-      <div class="movie-type-and-time">
-        <p class="movie-time">${getFromLocal.Runtime}</p>
-        <p class="movie-type">${getFromLocal.Genre}</p>
-        <a class="add-watchlist" data-imdbid="${getFromLocal.imdbID}"><i class="fa-solid fa-circle-plus fa-lg" style="color: #000000;"></i>Watchlist</a>
+      
+      <div class="movie-info-wrapper">
+        <div class="movie-name-wrapper">
+          <h4 class="movie-name">${movie.Title}</h4>
+          <p class="movie-imdb"><i class="fa-solid fa-star fa-md" style="color: #fec654;"></i>${movie.imdbRating}</p>
+        </div>
+        <div class="movie-type-and-time">
+          <p class="movie-time">${movie.Runtime}</p>
+          <p class="movie-type">${movie.Genre}</p>
+          <a class="add-watchlist" data-imdbid="${movie.imdbID}"><i class="fa-solid fa-circle-plus fa-lg" style="color: #000000;"></i>Watchlist</a>
+        </div>
+        <div class="movie-bio-wrapper">
+          <p class="movie-bio">${movie.Plot}</p>
+        </div>
       </div>
-      <div class="movie-bio-wrapper">
-        <p class="movie-bio">${getFromLocal.Plot}</p>
-      </div>
-    </div>
-  </div>`
+    </div>`
+    }
+  return htmlString
 }
+
 
 
 window.onload = function() {
