@@ -36,7 +36,7 @@ function placeHtml(filmArray) {
 
   let htmlString = ``
   for(let movie of filmArray) {
-    fetch(`http://www.omdbapi.com/?apikey=5a98f506&t=${movie.Title}&plot=short`)
+    fetch(`https://www.omdbapi.com/?apikey=5a98f506&t=${movie.Title}&plot=short`)
       .then(res => res.json())
       .then(data => {
         movies.push(data)
