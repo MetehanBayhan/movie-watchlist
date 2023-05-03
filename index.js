@@ -69,10 +69,14 @@ function placeHtml(filmArray) {
 
 }
 
+
 if (location.pathname === "/index.html"){
   searchBtn.addEventListener("click", () => {
     getMovie(searchBar.value)
   })
+} 
+else if (location.pathname == `/`){
+  location.pathname = '/index.html';
 }
 
 document.addEventListener("click", (e) => {
@@ -81,13 +85,23 @@ document.addEventListener("click", (e) => {
   }
 })
 
-let currentWatchlist = []
+
 
 function addToMyList(imdbId){
+  const currentArr = []
   for(let movie of movies){
     if(movie.imdbID == imdbId){
-      currentWatchlist.push(movie)
-      localStorage.setItem("data", JSON.stringify(currentWatchlist))
+      if(JSON.parse(localStorage.getItem("watchlistArray"))){
+        currentWatchlist = JSON.parse(localStorage.getItem("watchlistArray"))
+        const hasMovie = currentWatchlist.some(item => item.imdbID === imdbId)
+        if(!hasMovie){
+          currentWatchlist.unshift(movie)
+          localStorage.setItem("watchlistArray", JSON.stringify(currentWatchlist))
+        }
+      } else {
+        currentArr.unshift(movie)
+        localStorage.setItem("watchlistArray", JSON.stringify(currentArr))
+      }
     }
   }
 }
@@ -98,7 +112,7 @@ pageDirection.addEventListener("click", () => {
 })
 
 function renderMyList() {
-  currentWatchlist = JSON.parse(localStorage.getItem("data"))
+  currentWatchlist = JSON.parse(localStorage.getItem("watchlistArray"))
   let htmlString = ``
   for(let movie of currentWatchlist){
     htmlString += `
