@@ -8,7 +8,7 @@ const myWatchlistBox = document.querySelector(".my-watchlist-wrapper")
 const pageDirection = document.querySelector(".watchlist-page-link")
 
 function getMovie(movieName){
-    fetch(`http://www.omdbapi.com/?apikey=5a98f506&s=${movieName}&type=movie&plot=short`)
+    fetch(`https://www.omdbapi.com/?apikey=5a98f506&s=${movieName}&type=movie&plot=short`)
     .then(res => res.json())
     .then(data => {
       if(data.Response === "True"){
