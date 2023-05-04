@@ -117,7 +117,7 @@ function renderMyList() {
   for(let movie of currentWatchlist){
     htmlString += `
     <div class="movie">
-      <div class="movie-poster-wrapper">
+      <div class="movie-poster-wrapper delete-poster">
         <img src="${movie.Poster}" alt="" class="movie-poster">
       </div>
       

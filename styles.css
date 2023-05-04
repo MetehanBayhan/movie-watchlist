@@ -181,10 +181,30 @@ header {
 
 .movie-poster-wrapper {
   width: 27%;
+  position: relative;
+}
+
+
+.delete-poster:hover::after{
+  content: "Delete";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 1.5rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
 }
 
 .movie-poster {
   width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .movie-info-wrapper {
