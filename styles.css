@@ -199,6 +199,7 @@ header {
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.75);
+  cursor: pointer;
 }
 
 .movie-poster {

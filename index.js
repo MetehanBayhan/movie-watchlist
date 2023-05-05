@@ -83,6 +83,9 @@ document.addEventListener("click", (e) => {
   if(e.target.dataset.imdbid){
     addToMyList(e.target.dataset.imdbid)
   }
+  if(e.target.dataset.posterid){
+    removeFromMyList(e.target.dataset.posterid)
+  }
 })
 
 
@@ -92,7 +95,7 @@ function addToMyList(imdbId){
   for(let movie of movies){
     if(movie.imdbID == imdbId){
       if(JSON.parse(localStorage.getItem("watchlistArray"))){
-        currentWatchlist = JSON.parse(localStorage.getItem("watchlistArray"))
+        let currentWatchlist = JSON.parse(localStorage.getItem("watchlistArray"))
         const hasMovie = currentWatchlist.some(item => item.imdbID === imdbId)
         if(!hasMovie){
           currentWatchlist.unshift(movie)
@@ -106,22 +109,46 @@ function addToMyList(imdbId){
   }
 }
 
+function removeFromMyList(imdbId) {
+    let currentWatchlist = JSON.parse(localStorage.getItem("watchlistArray"))
+    for(let movie of currentWatchlist){
+      if(movie.imdbID == imdbId){
+        currentWatchlist.splice(currentWatchlist.indexOf(movie), 1);
+        localStorage.setItem("watchlistArray", JSON.stringify(currentWatchlist))
+      }
+    }
+    renderMyList()
+}
+
+
 
 pageDirection.addEventListener("click", () => {
-  localStorage.setItem("renderResult",renderMyList())
+  renderMyList()
 })
 
 function renderMyList() {
-  currentWatchlist = JSON.parse(localStorage.getItem("watchlistArray"))
+  let currentWatchlist = JSON.parse(localStorage.getItem("watchlistArray"))
   let htmlString = ``
-  for(let movie of currentWatchlist){
+  let currentSelection = []
+  console.log(searchedFilmsArray);
+  if(searchedFilmsArray.length > 0){
+    currentSelection = searchedFilmsArray
+  }else if(currentWatchlist.length > 0){
+    currentSelection = currentWatchlist
+  }else {
+    myWatchlistBox.innerHTML = ""
+  }
+    
+  for(let movie of currentSelection){
     htmlString += `
     <div class="movie">
-      <div class="movie-poster-wrapper delete-poster">
+
+      <div class="movie-poster-wrapper delete-poster" data-posterid="${movie.imdbID}">
         <img src="${movie.Poster}" alt="" class="movie-poster">
       </div>
       
       <div class="movie-info-wrapper">
+
         <div class="movie-name-wrapper">
           <h4 class="movie-name">${movie.Title}</h4>
           <p class="movie-imdb"><i class="fa-solid fa-star fa-md" style="color: #fec654;"></i>${movie.imdbRating}</p>
@@ -134,16 +161,69 @@ function renderMyList() {
         <div class="movie-bio-wrapper">
           <p class="movie-bio">${movie.Plot}</p>
         </div>
+
       </div>
+
     </div>`
-    }
+  }
+  
+  searchedFilmsArray = []
+  myWatchlistBox.innerHTML = htmlString;
   return htmlString
+}
+
+if (location.pathname === "/watchlist.html") {
+  watchlistSearchBtn.addEventListener("click", () =>{
+    if(watchlistSearchBar.value){
+      getFromMyMovies(watchlistSearchBar.value)
+    } else {renderMyList()}
+  })
+}
+
+let searchedFilmsArray = []
+function getFromMyMovies(searchResult) {
+  let currentWatchlist = JSON.parse(localStorage.getItem("watchlistArray"))
+  const capitalizedStr = searchResult
+    .split(" ")
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+
+  for(let movie of currentWatchlist){
+    if(movie.Title.includes(capitalizedStr)){
+      searchedFilmsArray.push(movie)
+    }
+  }
+  console.log("#1")
+  console.log(renderMyList())
 }
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//  when window change and if its watchlist.html it works
 window.onload = function() {
   if (location.pathname === "/watchlist.html"){
+    localStorage.setItem("renderResult",renderMyList())
     const renderResult = localStorage.getItem("renderResult");
     if (renderResult) {
       myWatchlistBox.innerHTML = renderResult;
