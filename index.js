@@ -130,7 +130,6 @@ function renderMyList() {
   let currentWatchlist = JSON.parse(localStorage.getItem("watchlistArray"))
   let htmlString = ``
   let currentSelection = []
-  console.log(searchedFilmsArray);
   if(searchedFilmsArray.length > 0){
     currentSelection = searchedFilmsArray
   }else if(currentWatchlist.length > 0){
@@ -193,8 +192,6 @@ function getFromMyMovies(searchResult) {
       searchedFilmsArray.push(movie)
     }
   }
-  console.log("#1")
-  console.log(renderMyList())
 }
 
 
